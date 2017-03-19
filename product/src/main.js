@@ -20,7 +20,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.requireAuth) {
         // console.log(isEmptyObject(store.state.user)) 
-        if (!isEmptyObject(store.state.user)) {
+        if (!isEmptyObject(store.state.user.initCode)) {
             next();
         } else {
             next({
@@ -35,6 +35,7 @@ router.beforeEach((to, from, next) => {
     }
 })
 
+//判断object是否为空
 function isEmptyObject(obj) {
     for (var key in obj) {
         return false;
@@ -42,7 +43,6 @@ function isEmptyObject(obj) {
     return true;
 }
 
-//判断object是否为空
 new Vue({
     store,
     router,

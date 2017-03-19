@@ -34,11 +34,6 @@
         watch: {
             inviteCode: 'isLogin'
         },
-        computed: {
-            user() {
-                return this.$store.state.user
-            }
-        },
         methods: {
             isLogin() {
                 // this.$http.get('http://localhost:3000/users?username=' + this.name + '&password=' + this.pwd).then((response) => {
@@ -57,6 +52,8 @@
                 // }).then((error)=> this.error = error)
 
                 if(this.inviteCode == this.userData.initCode){
+                    window.localStorage['localData'] = JSON.stringify(this.userData);//本地存储用户信息
+
                     this.$store.commit('isLogin', this.userData);
                     this.$router.push({path: 'main'});
                 }
