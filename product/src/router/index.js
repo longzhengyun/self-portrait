@@ -1,44 +1,29 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Login from '@/components/Login'
-import Info from '@/components/Info'
+//先引入需要路由的文件
+import Login from '../components/Login'
+import Main from '../components/Main'
+import CaseList from '../components/CaseList'
 
-Vue.use(Router)
-
-const router = new Router({
-    routes: [{
+export default [
+    {
         path: '/',
-        name: 'Info',
-        meta: {
-            requireAuth: true //添加字段，表示进入这个路由需要登录
-        },
-        component: Info
-    }, {
-        path: '/info',
-        name: 'Info',
-        meta: {
-            requireAuth: true //添加字段，表示进入这个路由需要登录
-        },
-        component: Info
-    }, {
+        redirect: '/main'
+    },
+    {
         path: '/login',
-        name: 'Login',
         component: Login
-    }],
-    mode: 'history'
-});
-
-router.beforeEach((to, from, next) => {
-    if (to.meta.requireAuth) {
-        next({
-            path: '/login',
-            query: {
-                redirect: to.fullPath
-            } //将跳转的路由path作为参数，登录成功后跳转到该路由
-        });
-    } else {
-        next();
+    },
+    {
+        path: '/main',
+        meta: {// 添加该字段，表示进入这个路由是需要登录的
+            requireAuth: true
+        },
+        component: Main
+    },
+    {
+        path: '/caselist',
+        meta: {
+            requireAuth: true
+        },
+        component: CaseList
     }
-});
-
-export default router;
+]

@@ -1,25 +1,17 @@
 <template>
-    <div id="app">
-        <img src="./assets/logo.png" class="logo">
+    <div class="section-wrap">
+        <header-component></header-component>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-export default {
-    name: 'app',
-    data(){
-        return {
-        }
-    },
-    mounted(){
-    },
-    methods: {
-    }
-}
-</script>
+    import HeaderComponent from './components/Header'
 
-<style>
-body{background-color:#eee;}
-.logo{display:block;width:320px;height:100px;margin:40px auto;}
-</style>
+    export default {
+        name: 'app',
+        components: {
+            HeaderComponent
+        }
+    }
+</script>

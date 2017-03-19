@@ -1,63 +1,66 @@
 <template>
-    <div class="login">
-        <h1 class="login-title">{{msg}}</h1>
-        <input type="text" v-model="loginData.username">
-        <input type="password" v-model="loginData.password">
-        <button v-on:click="login">访问</button>
+    <div class="content">
+        <form class="form-mode">
+            <div class="form-group form-twin-three form-single">
+                <div class="group-name">邀请码</div>
+                <div class="group-cont">
+                    <input type="password" class="form-input" placeholder="如果您是HR，请输入邀请码" v-model="inviteCode" />
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
-export default {
-    name: 'login',
-    data() {
-        return {
-            msg: '请验证访问身份！',
-            account: {
-                username:'hr',
-                password:'iamhr'
-            },
-            loginData: {
-                username:'',
-                password:''
-            },
-            resumeData:{}
-        }
-    },
-    mounted(){
-        this.getValidate()
-    },
-    methods: {
-        login(){
-            if(this.loginData.username == this.account.username && this.loginData.password == this.account.password){
-                var now = new Date().getTime();
-                this.resumeData.date = now;
-                this.resumeData.pass = true;
-                this.setLocalData('resumeData', this.resumeData); //本地存储用户数据
-                this.$router.push({path: 'info'});
-            }else{
-                console.log('验证失败！');
+    export default {
+        name: 'login',
+        data() {
+            return {
+                inviteCode: '',
+                userData: {
+                    username: 'hr',
+                    initCode: 'iamhr'
+                },
+                headerConfig: {
+                    title: '验证访问权限',
+                    btnBack: false,
+                    btnHome: false
+                }
             }
         },
-        getValidate(){
-            var now = new Date().getTime();
-                this.resumeData = this.getLocalData('resumeData');
-            if(this.resumeData.pass && (now - this.resumeData.date) < 3600000){
-                this.resumeData.date = now;
-                this.setLocalData('resumeData', this.resumeData); //本地存储用户数据
-                this.$router.push({path: 'info'});
-            };
+        mounted(){
+            this.$store.commit('headerConfig', this.headerConfig);
         },
-        setLocalData: function(key, value) {
-            window.localStorage[key] = JSON.stringify(value);
+        watch: {
+            inviteCode: 'isLogin'
         },
-        getLocalData(key){
-            return JSON.parse(window.localStorage[key] || '{}');
+        computed: {
+            user() {
+                return this.$store.state.user
+            }
+        },
+        methods: {
+            isLogin() {
+                // this.$http.get('http://localhost:3000/users?username=' + this.name + '&password=' + this.pwd).then((response) => {
+                //     //这里在isLogin方法中先判断一下后台返回的是否为空值，如果不是然后提交后台返回的值。
+                //     //注意这里是个难点，Vuex与Vue-Resource结合使用。 
+                //     if(response.body != null & response.body.length > 0){ 
+                //         this.$store.commit('isLogin', response.body[0]);
+                //         this.name = '';
+                //         this.pwd = '';
+                //         this.$router.push({ path: 'main' });
+                //     }else{
+                //         alert('请输入正确的用户名和密码！！！');
+                //         this.name = '';
+                //         this.pwd = '';
+                //     }
+                // }).then((error)=> this.error = error)
+
+                if(this.inviteCode == this.userData.initCode){
+                    this.$store.commit('isLogin', this.userData);
+                    this.$router.push({path: 'main'});
+                }
+            }
         }
     }
-}
 </script>
-
-<style scoped>
-
-</style>
