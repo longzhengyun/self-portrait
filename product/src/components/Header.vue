@@ -30,8 +30,8 @@
                 this.$router.go(-1);
             },
             getData(dataVAR){
-                this.$http.get(this.staticPath + 'static/data/db_config.php?id=' + dataVAR).then((response) => {
-                    // this.$store.commit('getResumeData', response.body.db_data[0]);
+                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=' + dataVAR).then((response) => {
+                    this.$store.commit('getResumeData', response.body.db_data[0]);
                 }).then((error)=> this.error = error)
             }
         }
