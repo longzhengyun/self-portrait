@@ -43,7 +43,7 @@
             }
         },
         mounted(){
-            this.$store.commit('headerConfig', this.headerConfig);
+            this.$store.commit('setHeaderConfig', this.headerConfig);
         }
     }
 </script>

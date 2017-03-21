@@ -17,11 +17,22 @@
         computed: {
             headerConfig(){
                 return this.$store.state.headerConfig
+            },
+            staticPath(){
+                return this.$store.state.staticPath
             }
+        },
+        mounted(){
+            this.getData('user_data');
         },
         methods: {
             goBack(){
                 this.$router.go(-1);
+            },
+            getData(dataVAR){
+                this.$http.get(this.staticPath + 'static/data/db_config.php?id=' + dataVAR).then((response) => {
+                    // this.$store.commit('getResumeData', response.body.db_data[0]);
+                }).then((error)=> this.error = error)
             }
         }
     }

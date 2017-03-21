@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <form class="form-mode">
-            <div class="resume-photo"><img v-bind:src="resumeData.photo"></div>
+            <div class="resume-photo"><img v-bind:src="'static/' + resumeData.photo"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">姓名</div>
                 <div class="group-cont">{{resumeData.user}}</div>
@@ -95,21 +95,26 @@
                     title: 'Rusume',
                     btnBack: false,
                     btnHome: false
-                },
-                resumeData: {}
+                }
             }
         },
         mounted(){
-            this.$store.commit('headerConfig', this.headerConfig);
+            this.$store.commit('setHeaderConfig', this.headerConfig);
         },
         computed: {
             user() {
                 return this.$store.state.user
+            },
+            resumeData(){
+                return this.$store.state.resumeData
+            },
+            staticPath(){
+                return this.$store.state.staticPath
             }
         },
         methods: {
             goTarget(target){
-                this.$router.push({path: target});
+                this.$router.push({path: this.staticPath + target});
             }
         }
     }

@@ -28,8 +28,13 @@
                 }
             }
         },
+        computed: {
+            staticPath(){
+                return this.$store.state.staticPath
+            }
+        },
         mounted(){
-            this.$store.commit('headerConfig', this.headerConfig);
+            this.$store.commit('setHeaderConfig', this.headerConfig);
         },
         watch: {
             inviteCode: 'isLogin'
@@ -55,7 +60,7 @@
                     window.localStorage['localData'] = JSON.stringify(this.userData);//本地存储用户信息
 
                     this.$store.commit('isLogin', this.userData);
-                    this.$router.push({path: 'main'});
+                    this.$router.push({path: this.staticPath + 'main'});
                 }
             }
         }
