@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <form class="form-mode">
-            <div class="resume-photo"><img v-bind:src="'static/' + resumeData.photo"></div>
+            <div class="resume-photo"><img v-bind:src="resumeData.photo"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">姓名</div>
                 <div class="group-cont">{{resumeData.user}}</div>
@@ -61,27 +61,27 @@
         <form class="form-mode">
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">个人案例</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('caseList')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('caselist')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">职业评价</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeInfo')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('resumeinfo')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">职业技能</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeSkill')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('resumeskill')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">工作经历</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeExperience')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('resumeexperience')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">其他信息</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeOther')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('resumeother')"></div>
             </div>
         </form>
     </div>
@@ -102,9 +102,6 @@
             this.$store.commit('setHeaderConfig', this.headerConfig);
         },
         computed: {
-            user() {
-                return this.$store.state.user
-            },
             resumeData(){
                 return this.$store.state.resumeData
             },

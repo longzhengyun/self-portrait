@@ -8,7 +8,8 @@ const state = {
     // staticPath: '/resume/',
     user: JSON.parse(window.localStorage['localData'] || '{}'),
     headerConfig:{},
-    resumeData:{}
+    resumeData:{},
+    caseData:{}
 }
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
     },
     getResumeData(state, resumeData){
         state.resumeData = resumeData
+    },
+    getCaseData(state, caseData){
+        state.caseData = caseData
     }
 }
 

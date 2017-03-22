@@ -4,6 +4,7 @@ import store from '../vuex/store'
 import Login from '../components/Login'
 import Main from '../components/Main'
 import CaseList from '../components/CaseList'
+import CaseDetail from '../components/CaseDetail'
 
 export default [
     {
@@ -26,6 +27,15 @@ export default [
         meta: {
             requireAuth: true
         },
-        component: CaseList
+        component: CaseList,
+        children: [
+            {
+                path: ':id',
+                component: CaseDetail,
+                meta: {
+                    requireAuth: true
+                }
+            }
+        ]
     }
 ]

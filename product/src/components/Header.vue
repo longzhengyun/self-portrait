@@ -23,15 +23,46 @@
             }
         },
         mounted(){
-            this.getData('user_data');
+            this.getData();
         },
         methods: {
             goBack(){
                 this.$router.go(-1);
             },
-            getData(dataVAR){
-                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=' + dataVAR).then((response) => {
-                    this.$store.commit('getResumeData', response.body.db_data[0]);
+            arraySort(array, key){
+                return array.sort(function(a, b){
+                    var a = a[key];
+                    var b = b[key];
+                    if (a < b) {
+                        return 1;
+                    } else if (a > b) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                })
+            },
+            getData(){
+                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=user_data').then((response) => {
+                    let resumeData = response.body.db_data[0];
+
+                    let year = new Date().getFullYear();
+                    let month = (new Date().getMonth() + 1) > 9 ?  '' + (new Date().getMonth() + 1) : '0' + (new Date().getMonth() + 1);
+                    let day = new Date().getDate() > 9 ? '' + new Date().getDate() : '0' + new Date().getDate();
+                    let age = (year + month + day - resumeData.birthday.replace(/-/g,'')).toString().substr(0, 2);
+                    let worklife = year - resumeData.worklife.toString().substr(0, 4);
+
+
+                    resumeData.photo = 'static/' + resumeData.photo;
+                    resumeData.age = age;
+                    resumeData.worklife = worklife;
+
+                    this.$store.commit('getResumeData', resumeData);
+                }).then((error)=> this.error = error);
+
+                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=case_data').then((response) => {
+                    let caseData = this.arraySort(response.body.db_data, 'date');
+                    this.$store.commit('getCaseData', caseData);
                 }).then((error)=> this.error = error)
             }
         }
