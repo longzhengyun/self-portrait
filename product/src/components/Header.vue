@@ -6,7 +6,7 @@
             <!-- back -->
             <span class="header-icon icon-back" v-if="headerConfig.btnBack" v-on:click="goBack()"></span>
             <!-- home -->
-            <router-link class="header-icon icon-home2" v-if="headerConfig.btnHome" to="main"></router-link>
+            <router-link class="header-icon icon-home2" v-if="headerConfig.btnHome" to="/main"></router-link>
         </div>
     </div>
 </template>
@@ -17,9 +17,6 @@
         computed: {
             headerConfig(){
                 return this.$store.state.headerConfig
-            },
-            staticPath(){
-                return this.$store.state.staticPath
             }
         },
         mounted(){
@@ -43,7 +40,7 @@
                 })
             },
             getData(){
-                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=user_data').then((response) => {
+                this.$http.get(ROUTER_PATH + STATIC_PATH + 'static/data/db_config.php?id=user_data').then((response) => {
                     let resumeData = response.body.db_data[0];
 
                     let year = new Date().getFullYear();
@@ -52,16 +49,23 @@
                     let age = (year + month + day - resumeData.birthday.replace(/-/g,'')).toString().substr(0, 2);
                     let worklife = year - resumeData.worklife.toString().substr(0, 4);
 
-
                     resumeData.photo = 'static/' + resumeData.photo;
                     resumeData.age = age;
                     resumeData.worklife = worklife;
+                    resumeData.info = JSON.parse(resumeData.info);
+                    resumeData.skill = JSON.parse(resumeData.skill);
+                    resumeData.experience = JSON.parse(resumeData.experience);
+                    resumeData.other = JSON.parse(resumeData.other);
 
                     this.$store.commit('getResumeData', resumeData);
                 }).then((error)=> this.error = error);
 
-                this.$http.get('/api' + this.staticPath + 'resume/static/data/db_config.php?id=case_data').then((response) => {
+                this.$http.get(ROUTER_PATH + STATIC_PATH + 'static/data/db_config.php?id=case_data').then((response) => {
                     let caseData = this.arraySort(response.body.db_data, 'date');
+                    caseData.forEach((value) => {
+                        value.pages = JSON.parse(value.pages);
+                    });
+
                     this.$store.commit('getCaseData', caseData);
                 }).then((error)=> this.error = error)
             }

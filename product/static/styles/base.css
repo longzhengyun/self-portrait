@@ -287,5 +287,5 @@ h3{font:600 0.8rem/1.5 Tahoma,"Microsoft YaHei","SimHei";}
 .network-mode2 .text-network{margin-left:.2rem;color:#969ea2;vertical-align:middle;}
 
 /* title mode | 通用标题 */
-.title-mode .title-cont{padding:.5rem .5rem 0 .5rem;font-size:.8rem;font-weight:normal;color:#82898d;background-color:#efeff4;border-bottom:1px solid #dfdfdf;}
+.title-mode .title-cont{padding:.5rem .5rem 0 .5rem;font-size:.8rem;font-weight:normal;color:#82898d;background-color:#eee;border-bottom:1px solid #dfdfdf;}
 .title-mode ~ .form-mode{border-top-color:transparent;}

@@ -15,24 +15,24 @@
                     <div class="item-data"><span class="data-date">{{item.date}}</span></div>
                     <div class="item-tags" v-if="!initSubMenu.tagsKey"><span v-bind:class="{'tags-item tags-item1':item.category=='Mobile', 'tags-item tags-item2':item.category=='PC'}">{{item.category}}</span></div>
                 </div>
-                <router-link v-bind:to="'caselist/' + item.id" v-bind:title="item.title" class="item-link"></router-link>
+                <router-link v-bind:to="'casedetail/' + item.id" v-bind:title="item.title" class="item-link"></router-link>
             </li>
         </ul>
     </div>
 </template>
 <script>
     export default {
-        name: 'main',
+        name: 'caseList',
         data() {
             return {
                 headerConfig: {
-                    title: '个人案例',
+                    title: 'Case',
                     btnBack: true,
                     btnHome: true
                 },
                 initSubMenu: {
                     items:[
-                        {itemName:'全部', itemKey:null, isCurrent:true},
+                        {itemName:'All', itemKey:null, isCurrent:true},
                         {itemName:'Mobile', itemKey:'Mobile', isCurrent:false},
                         {itemName:'PC', itemKey:'PC', isCurrent:false}
                     ],
@@ -46,9 +46,6 @@
         computed: {
             caseData(){
                 return this.$store.state.caseData
-            },
-            staticPath(){
-                return this.$store.state.staticPath
             }
         },
         methods: {

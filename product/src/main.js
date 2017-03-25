@@ -11,7 +11,35 @@ import './config'
 Vue.use(VueResource)
 Vue.use(VueRouter)
 
+const scrollBehavior = (to, from, savedPosition) => {
+    if (savedPosition) {
+        // savedPosition is only available for popstate navigations.
+        return savedPosition
+    } else {
+        const position = {}
+        // new navigation.
+        // scroll to anchor by returning the selector
+        if (to.hash) {
+            position.selector = to.hash
+        }
+        
+        // check if any matched route config has meta that requires scrolling to top
+        if (to.matched.some(m => m.meta.scrollToTop)) {
+            // cords will be used if no selector is provided,
+            // or if the selector didn't match any element.
+            position.x = 0
+            position.y = 0
+        }
+
+        // if the returned position is falsy or an empty object,
+        // will retain current scroll position.
+        return position
+    }
+}
+
 const router = new VueRouter({
+    base: __dirname,
+    scrollBehavior,
     routes,
     mode: 'history'
 })
@@ -20,11 +48,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.requireAuth) {
         // console.log(isEmptyObject(store.state.user)) 
-        if (!isEmptyObject(store.state.user.initCode)) {
+        if (!isEmptyObject(store.state.initCode)) {
             next();
         } else {
             next({
-                path: store.state.staticPath + 'login',
+                path: '/login',
                 query: {// 将跳转的路由path作为参数，登录成功后跳转到该路由
                     redirect: to.fullPath
                 }

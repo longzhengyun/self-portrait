@@ -1,55 +1,112 @@
 <template>
-    <div class="content">
-        <!-- sub menu -->
-        <div class="sub-menu">
-            <ul class="sub-menu-cont">
-                <li v-for="item in initSubMenu.items" v-bind:class="{true:'menu-item cur', false:'menu-item'}[item.isCurrent]" v-on:click="subMenuAction(item)">{{item.itemName}}</li>
-            </ul>
+    <div class="content case-detail">
+        <!-- title-mode -->
+        <div class="title-mode">
+            <h2 class="title-cont">Data</h2>
         </div>
-        <!-- case list -->
-        <ul class="list-mode2 case-list">
-            <li class="list-item" v-for="item in caseData">
-                <h2 class="item-title">{{item.title}}</h2>
-                <p class="item-info">{{item.description}}</p>
-                <div class="clearfix">
-                    <div class="item-data"><span class="data-date">{{item.date}}</span></div>
-                    <div class="item-tags" v-if="initSubMenu.tagsShow"><span v-bind:class="{'tags-item tags-item1':item.category=='Mobile', 'tags-item tags-item2':item.category=='PC'}">{{item.category}}</span></div>
-                </div>
-                <a v-bind:href="item.id" v-bind:title="item.title" class="item-link"></a>
-            </li>
-        </ul>
+        <!-- form-wrap -->
+        <form class="form-mode">
+            <div class="form-group form-twin-two form-single">
+                <div class="group-name">所属</div>
+                <div class="group-cont">{{detailData.belong}}</div>
+            </div>
+            <div class="line-between"></div>
+            <div class="form-group form-twin-two form-single">
+                <div class="group-name">分类</div>
+                <div class="group-cont">{{detailData.category}}</div>
+            </div>
+            <div class="line-between"></div>
+            <div class="form-group form-twin-two form-single">
+                <div class="group-name">日期</div>
+                <div class="group-cont">{{detailData.date}}</div>
+            </div>
+            <div class="line-between"></div>
+            <div class="form-group form-twin-two form-multi">
+                <div class="group-name">简介</div>
+                <div class="group-cont">{{detailData.description}}</div>
+            </div>
+        </form>
+        <!-- title-mode -->
+        <div class="title-mode">
+            <h2 class="title-cont">Pages</h2>
+        </div>
+        <!-- list mode -->
+        <div class="list-mode1 gap-bottom">
+            <div class="mode-cont">
+                <ul class="clearfix">
+                    <li class="list-item" v-for="item in detailData.pages"><a target="_blank" class="item" v-bind:href="'/static/case/' + item.url">{{item.name}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- title-mode -->
+        <div class="title-mode" v-if="recommendData.length">
+            <h2 class="title-cont">Recommend</h2>
+        </div>
+        <!-- list mode -->
+        <div class="list-mode1" v-if="recommendData.length">
+            <div class="mode-cont">
+                <ul class="clearfix">
+                    <li class="list-item" v-for="item in recommendData"><a class="item" v-bind:href="item.id">{{item.title}}</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     export default {
-        name: 'main',
+        name: 'caseDetail',
         data() {
             return {
+                id: this.$route.params.id,
                 headerConfig: {
-                    title: '个人案例',
+                    title: '',
                     btnBack: true,
                     btnHome: true
                 },
-                initSubMenu: {
-                    items:[
-                        {itemName:'全部', itemKey:'', isCurrent:true},
-                        {itemName:'Mobile', itemKey:'Mobile', isCurrent:false},
-                        {itemName:'PC', itemKey:'PC', isCurrent:false}
-                    ],
-                    tagsKey:'',
-                    tagsShow:true
-                }
+                detailData: {},
+                recommendData: []
             }
         },
         mounted(){
+            this.getDetailData();
             this.$store.commit('setHeaderConfig', this.headerConfig);
         },
         computed: {
             caseData(){
                 return this.$store.state.caseData
+            }
+        },
+        watch: {
+            caseData: 'getDetailData',
+            detailData: 'getRecommendData'
+        },
+        methods: {
+            getDetailData(){
+                if(!this.isEmptyObject(this.caseData)){
+                    this.caseData.forEach((value) => {
+                        //当前ID数据
+                        if(value.id == this.id){
+                            this.detailData = value;
+                            this.headerConfig.title = value.title;
+                        };
+                    });
+                }
             },
-            staticPath(){
-                return this.$store.state.staticPath
+            getRecommendData(){
+                if(!this.isEmptyObject(this.caseData)){
+                    this.caseData.forEach((value) => {
+                        //当前ID相关推荐数据
+                        if(value.id != this.detailData.id && value.belong == this.detailData.belong && value.hot == 'y' && this.recommendData.length < 4){
+                            this.recommendData.push(value);
+                        };
+                    });
+                }
+            },
+            isEmptyObject(obj) {
+                for (var key in obj) {
+                    return false;
+                }
+                return true;
             }
         }
     }

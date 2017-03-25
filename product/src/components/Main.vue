@@ -4,12 +4,7 @@
             <div class="resume-photo"><img v-bind:src="resumeData.photo"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">姓名</div>
-                <div class="group-cont">{{resumeData.user}}</div>
-            </div>
-            <div class="line-between"></div>
-            <div class="form-group form-twin-four form-single">
-                <div class="group-name">昵称</div>
-                <div class="group-cont">{{resumeData.nickname}}</div>
+                <div class="group-cont">{{resumeData.user}} <span class="color-gray">({{resumeData.nickname}})</span></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
@@ -66,22 +61,22 @@
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">职业评价</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeinfo')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('info')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">职业技能</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeskill')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('skill')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">工作经历</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeexperience')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('experience')"></div>
             </div>
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">其他信息</div>
-                <div class="group-cont group-arrow" v-on:click="goTarget('resumeother')"></div>
+                <div class="group-cont group-arrow" v-on:click="goTarget('other')"></div>
             </div>
         </form>
     </div>
@@ -104,14 +99,11 @@
         computed: {
             resumeData(){
                 return this.$store.state.resumeData
-            },
-            staticPath(){
-                return this.$store.state.staticPath
             }
         },
         methods: {
             goTarget(target){
-                this.$router.push({path: this.staticPath + target});
+                this.$router.push({path: STATIC_PATH + target});
             }
         }
     }
