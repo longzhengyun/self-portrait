@@ -40,7 +40,7 @@
                 })
             },
             getData(){
-                this.$http.get(ROUTER_PATH + STATIC_PATH + 'static/data/db_config.php?id=user_data').then((response) => {
+                this.$http.get(API_PATH + STATIC_PATH + 'static/data/db_config.php?id=user_data').then((response) => {
                     let resumeData = response.body.db_data[0];
 
                     let year = new Date().getFullYear();
@@ -49,6 +49,7 @@
                     let age = (year + month + day - resumeData.birthday.replace(/-/g,'')).toString().substr(0, 2);
                     let worklife = year - resumeData.worklife.toString().substr(0, 4);
 
+                    //数据格式化
                     resumeData.photo = 'static/' + resumeData.photo;
                     resumeData.age = age;
                     resumeData.worklife = worklife;
@@ -60,7 +61,7 @@
                     this.$store.commit('getResumeData', resumeData);
                 }).then((error)=> this.error = error);
 
-                this.$http.get(ROUTER_PATH + STATIC_PATH + 'static/data/db_config.php?id=case_data').then((response) => {
+                this.$http.get(API_PATH + STATIC_PATH + 'static/data/db_config.php?id=case_data').then((response) => {
                     let caseData = this.arraySort(response.body.db_data, 'date');
                     caseData.forEach((value) => {
                         value.pages = JSON.parse(value.pages);

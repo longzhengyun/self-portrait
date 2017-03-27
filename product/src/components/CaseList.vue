@@ -50,20 +50,19 @@
         },
         methods: {
             subMenuAction(item){
-                for (var i = 0; i < this.initSubMenu.items.length; i++) {
-                    this.initSubMenu.items[i].isCurrent = false;
-                };
+                this.initSubMenu.items.forEach((value) => {
+                    value.isCurrent = false;
+                });
 
                 item.isCurrent = true;
                 this.initSubMenu.tagsKey = item.itemKey;
 
-                for (var i = 0; i < this.caseData.length; i++) {
-                    this.caseData[i].hide = false;
-
-                    if(this.caseData[i].category == item.itemKey){
-                        this.caseData[i].hide = true;
+                this.caseData.forEach((value) => {
+                    value.hide = false;
+                    if(value.category == item.itemKey){
+                        value.hide = true;
                     }
-                };
+                });
             }
         }
     }
