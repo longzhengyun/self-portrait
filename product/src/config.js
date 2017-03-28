@@ -1,10 +1,12 @@
 // localhost
-global.STATIC_PATH = '/';
-global.API_PATH = '/api/resume';
+global.STATIC_PATH = '/'; //静态资源目录
+global.API_PATH = '/api/resume'; //请求接口目录
+global.ROUTER_PATH = __dirname; //路由目录
 
 // production
-// global.STATIC_PATH = '/resume/';
-// global.API_PATH = '';
+// global.STATIC_PATH = '/resume/'; //静态资源目录
+// global.API_PATH = ''; //请求接口目录
+// global.ROUTER_PATH = ''; //路由目录
 
 //自动设置font-size的值
 (function(doc, win) {

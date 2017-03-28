@@ -38,7 +38,7 @@ const scrollBehavior = (to, from, savedPosition) => {
 }
 
 const router = new VueRouter({
-    base: __dirname,
+    base: ROUTER_PATH,
     scrollBehavior,
     routes,
     mode: 'history'
