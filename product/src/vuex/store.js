@@ -4,15 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-    initCode: JSON.parse(window.localStorage['localData'] || '{}'),
+    localData: JSON.parse(window.localStorage['localData'] || '{}'),
     headerConfig:{},
     resumeData:{},
     caseData:{}
 }
 
 const mutations = {
-    isLogin(state, initCode) {
-        state.initCode = initCode
+    isLogin(state, localData) {
+        state.localData = localData
     },
     setHeaderConfig(state, headerConfig){
         state.headerConfig = headerConfig

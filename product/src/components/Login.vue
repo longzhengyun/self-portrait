@@ -4,7 +4,7 @@
             <div class="form-group form-twin-three form-single">
                 <div class="group-name">邀请码</div>
                 <div class="group-cont">
-                    <input type="password" class="form-input" placeholder="如果您是HR，请输入邀请码" v-model="inviteCode" />
+                    <input type="password" class="form-input" placeholder="如果您是HR，请输入邀请码" v-model="localData.code" />
                 </div>
             </div>
         </form>
@@ -16,8 +16,10 @@
         name: 'login',
         data() {
             return {
-                inviteCode: '',
-                initCode: 'iamhr',
+                localData: {
+                    date: '',
+                    code: ''
+                },
                 headerConfig: {
                     title: '验证访问权限',
                     btnBack: false,
@@ -29,14 +31,18 @@
             this.$store.commit('setHeaderConfig', this.headerConfig);
         },
         watch: {
-            inviteCode: 'isLogin'
+            'localData.code': 'isLogin'
         },
         methods: {
             isLogin() {
-                if(this.inviteCode == this.initCode){
-                    window.localStorage['localData'] = JSON.stringify(this.initCode);//本地存储用户信息
+                if(this.localData.code.length >= 5 && MD5(this.localData.code) == CODE){
+                    this.localData = {
+                        code: CODE,
+                        date: new Date().getTime()
+                    };
+                    window.localStorage['localData'] = JSON.stringify(this.localData);//本地存储用户信息
 
-                    this.$store.commit('isLogin', this.initCode);
+                    this.$store.commit('isLogin', this.localData);
                     this.$router.push({path: STATIC_PATH + 'main'});
                 }
             }

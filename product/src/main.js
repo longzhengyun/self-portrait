@@ -48,7 +48,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.requireAuth) {
         // console.log(isEmptyObject(store.state.user)) 
-        if (!isEmptyObject(store.state.initCode)) {
+        if (isPass(store.state.localData)) {
             next();
         } else {
             next({
@@ -64,11 +64,16 @@ router.beforeEach((to, from, next) => {
 })
 
 //判断object是否为空
-function isEmptyObject(obj) {
-    for (var key in obj) {
+function isPass(obj) {
+    var now = new Date().getTime();
+    if((obj.code == CODE) && (now - obj.date) < 3600000){
+        obj.date = now;
+        window.localStorage['localData'] = JSON.stringify(obj);//本地存储用户信息
+        return true;
+    }else{
+        window.localStorage.removeItem('localData'); //清除本地存储用户数据
         return false;
-    }
-    return true;
+    };
 }
 
 new Vue({
