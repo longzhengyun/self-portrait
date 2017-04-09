@@ -20,7 +20,7 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Info',
+                    title: '职业评价',
                     btnBack: true,
                     btnHome: true
                 }

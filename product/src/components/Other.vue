@@ -20,7 +20,7 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Other',
+                    title: '其他信息',
                     btnBack: true,
                     btnHome: true
                 }

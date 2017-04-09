@@ -50,7 +50,7 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Experience',
+                    title: '工作经历',
                     btnBack: true,
                     btnHome: true
                 }

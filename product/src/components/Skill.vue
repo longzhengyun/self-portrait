@@ -21,7 +21,7 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Skill',
+                    title: '职业技能',
                     btnBack: true,
                     btnHome: true
                 }

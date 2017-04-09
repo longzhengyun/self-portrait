@@ -43,7 +43,7 @@
                     window.localStorage['localData'] = JSON.stringify(this.localData);//本地存储用户信息
 
                     this.$store.commit('isLogin', this.localData);
-                    this.$router.push({path: STATIC_PATH + 'main'});
+                    this.$router.push({path: 'main'});
                 }
             }
         }

@@ -6,7 +6,8 @@
             <!-- back -->
             <span class="header-icon icon-back" v-if="headerConfig.btnBack" v-on:click="goBack()"></span>
             <!-- home -->
-            <router-link class="header-icon icon-home2" v-if="headerConfig.btnHome" to="/main"></router-link>
+            <!-- <router-link class="header-icon icon-home2" v-if="headerConfig.btnHome" to="/main"></router-link> -->
+            <span class="header-icon icon-home2" v-if="headerConfig.btnHome" v-on:click="goHome()"></span>
         </div>
     </div>
 </template>
@@ -26,6 +27,9 @@
             goBack(){
                 this.$router.go(-1);
             },
+            goHome(){
+                window.location.href = '/website/';//跳转website
+            },
             arraySort(array, key){
                 return array.sort(function(a, b){
                     var a = a[key];
@@ -40,7 +44,7 @@
                 })
             },
             getData(){
-                this.$http.get(API_PATH + STATIC_PATH + 'static/data/db_config.php?id=user_data').then((response) => {
+                this.$http.get(API_PATH + 'static/data/db_config.php?id=user_data').then((response) => {
                     let resumeData = response.body.db_data[0];
 
                     let year = new Date().getFullYear();
@@ -50,7 +54,7 @@
                     let worklife = year - resumeData.worklife.toString().substr(0, 4);
 
                     //数据格式化
-                    resumeData.photo = 'static/' + resumeData.photo;
+                    resumeData.photo = '/static/' + resumeData.photo;
                     resumeData.age = age;
                     resumeData.worklife = worklife;
                     resumeData.info = JSON.parse(resumeData.info);
@@ -61,7 +65,7 @@
                     this.$store.commit('getResumeData', resumeData);
                 }).then((error)=> this.error = error);
 
-                this.$http.get(API_PATH + STATIC_PATH + 'static/data/db_config.php?id=case_data').then((response) => {
+                this.$http.get(API_PATH + 'static/data/db_config.php?id=case_data').then((response) => {
                     let caseData = this.arraySort(response.body.db_data, 'date');
                     caseData.forEach((value) => {
                         value.pages = JSON.parse(value.pages);

@@ -26,7 +26,7 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Case',
+                    title: '个人案例',
                     btnBack: true,
                     btnHome: true
                 },

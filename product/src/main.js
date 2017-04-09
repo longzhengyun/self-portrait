@@ -38,10 +38,8 @@ const scrollBehavior = (to, from, savedPosition) => {
 }
 
 const router = new VueRouter({
-    base: ROUTER_PATH,
     scrollBehavior,
-    routes,
-    mode: 'history'
+    routes
 })
 
 // 全局导航钩子

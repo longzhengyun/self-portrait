@@ -87,9 +87,9 @@
         data() {
             return {
                 headerConfig: {
-                    title: 'Rusume',
+                    title: 'Resume',
                     btnBack: false,
-                    btnHome: false
+                    btnHome: true
                 }
             }
         },
@@ -103,7 +103,7 @@
         },
         methods: {
             goTarget(target){
-                this.$router.push({path: STATIC_PATH + target});
+                this.$router.push({path: target});
             }
         }
     }
