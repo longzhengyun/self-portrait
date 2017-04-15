@@ -17,7 +17,7 @@
 </template>
 <script>
     export default {
-        name: 'main',
+        name: 'skill',
         data() {
             return {
                 headerConfig: {

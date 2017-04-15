@@ -16,12 +16,20 @@
     export default {
         name: 'header',
         computed: {
+            localData(){
+                return this.$store.state.localData
+            },
             headerConfig(){
                 return this.$store.state.headerConfig
             }
         },
         mounted(){
-            this.getData();
+            if(this.localData.date){
+                this.getData();
+            }
+        },
+        watch: {
+            'localData.code': 'getData'
         },
         methods: {
             goBack(){

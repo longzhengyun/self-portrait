@@ -1,5 +1,5 @@
 // localhost
-// global.API_PATH = '/api/resume/'; //请求接口目录
+// global.API_PATH = '/api/'; //请求接口目录
 
 // test
 // global.API_PATH = '../'; //请求接口目录

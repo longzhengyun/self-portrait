@@ -46,7 +46,7 @@
 </template>
 <script>
     export default {
-        name: 'main',
+        name: 'experience',
         data() {
             return {
                 headerConfig: {
