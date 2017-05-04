@@ -21,6 +21,11 @@
                 <div class="group-name">Email</div>
                 <div class="group-cont">{{resumeData.email}}</div>
             </div>
+            <div class="line-between"></div>
+            <div class="form-group form-twin-four form-single">
+                <div class="group-name">GitHub</div>
+                <div class="group-cont"><a v-bind:href="resumeData.github" target="_blank">{{resumeData.github}}</a></div>
+            </div>
         </form>
         <form class="form-mode">
             <div class="form-group form-twin-four form-single">
@@ -50,7 +55,7 @@
             <div class="line-between"></div>
             <div class="form-group form-twin-four form-single">
                 <div class="group-name">期望年薪</div>
-                <div class="group-cont">{{resumeData.salary}}元</div>
+                <div class="group-cont">{{resumeData.salary}}</div>
             </div>
         </form>
         <form class="form-mode">
