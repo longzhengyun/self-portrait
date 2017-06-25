@@ -59,7 +59,7 @@
 
                 this.caseData.forEach((value) => {
                     value.hide = false;
-                    if(value.category == item.itemKey){
+                    if(value.category !== item.itemKey && item.itemKey !== null){
                         value.hide = true;
                     }
                 });
